@@ -6,13 +6,13 @@
 /*   By: eagbomei <eagbomei@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:29:51 by eagbomei          #+#    #+#             */
-/*   Updated: 2023/11/13 13:29:33 by eagbomei         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:19:18 by eagbomei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char const *s2)
 {
 	char	*nstr;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: eagbomei <eagbomei@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 14:23:37 by eagbomei          #+#    #+#             */
-/*   Updated: 2024/02/02 15:10:55 by eagbomei         ###   ########.fr       */
+/*   Updated: 2024/02/08 13:45:17 by eagbomei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_putnbr_fd(int n, int fd);
 void	ft_putstr_fd(char *str, int fd);
 void	ft_putendl_fd(char *str, int fd);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
@@ -66,5 +66,7 @@ int		print_unint(unsigned int i);
 int		address_printer(uintptr_t i);
 int		hex_printer(const char format, unsigned int i);
 char	*get_next_line(int fd);
+char	*append_line(char *lines, char *ret);
+
 
 #endif

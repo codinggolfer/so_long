@@ -6,7 +6,7 @@
 /*   By: eagbomei <eagbomei@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:57:43 by eagbomei          #+#    #+#             */
-/*   Updated: 2024/02/02 16:08:52 by eagbomei         ###   ########.fr       */
+/*   Updated: 2024/02/16 14:30:33 by eagbomei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,34 @@
 #include "./MLX42/include/MLX42/MLX42.h"
 #include <stdio.h>
 
-void	check_map(int fd)
-{
-	char	**maps;
+// static char	**free_all(char **split)
+// {
+// 	size_t	i;
 
-	while (1)
-	{
-		map[i] = get_next_line(fd);
-		if (map[i] == NULL)
-			break ;
-		i++;
-	}
+// 	i = 0;
+// 	while (split[i] != '\0')
+// 	{
+// 		free(split[i]);
+// 		i++;
+// 	}
+// 	free(split);
+// 	return (0);
+// }
+
+void	ft_error(char *msg)
+{
+	ft_putendl_fd(msg, 2);
+	exit(1);
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
-	mlx_t	*mlx;
-	int		fd;
+	static t_game	map;
 
-	i = 0;
-	fd = open("maps.ber", O_RDONLY);
-	if (fd == -1)
-	{
-		ft_printf("Error\n");
-		exit(1);
-	}
+	if (ft_strlen(av[1]) <= 4)
+		ft_error("Error: not a propper map");
+	//map = malloc(sizeof(t_game));
+	ft_init_map(&map, ac, av[1]);
+	ft_init_game(map);
+	exit (0);
 }

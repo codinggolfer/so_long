@@ -6,7 +6,7 @@
 /*   By: eagbomei <eagbomei@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 14:24:16 by eagbomei          #+#    #+#             */
-/*   Updated: 2024/01/16 13:41:05 by eagbomei         ###   ########.fr       */
+/*   Updated: 2024/02/08 13:45:52 by eagbomei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*next_plz(char *lines)
 	return (line);
 }
 
-static char	*append_line(char *lines, char *ret)
+char	*append_line(char *lines, char *ret)
 {
 	char	*temp;
 
