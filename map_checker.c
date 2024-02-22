@@ -6,7 +6,7 @@
 /*   By: eagbomei <eagbomei@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:28:39 by eagbomei          #+#    #+#             */
-/*   Updated: 2024/02/15 12:46:45 by eagbomei         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:31:53 by eagbomei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,11 @@ static int	check_border(t_game *map, int i)
 
 static void	check_req(t_game *map, int i)
 {
-	size_t	j;
 	size_t	len;
 
-	j = i;
 	len = ft_strlen(map->maps[0]);
 	if (!check_border(map, i))
-		ft_error("Error: borders are open");
+		ft_error("Error: map is not closed or map is not reqtangular");
 	while (i--)
 	{
 		if (ft_strlen(map->maps[i]) != len)
@@ -48,64 +46,59 @@ static void	check_req(t_game *map, int i)
 		if (ft_strlen(map->maps[i]) != len)
 			ft_error("Error: map is not reqtangular");
 	}
-	if (ft_strlen(map->maps[0]) == j)
-		ft_error("Error: map is square");
 }
 
 static void	validate(t_game *map)
 {
-	int		player;
-
 	map->y = 0;
 	map->collect = 0;
-	player = 0;
 	map->exit = 0;
 	while (map->maps[++map->y])
 	{
 		map->x = 0;
 		while (map->maps[map->y][map->x++])
 		{
+			if (!ft_strchr("01EPC", map->maps[map->y][map->x]))
+				ft_error("Error: invalid map input");
 			if (map->maps[map->y][map->x] == 'C')
 				map->collect++;
 			if (map->maps[map->y][map->x] == 'P')
 			{
 				map->player.px = map->x;
 				map->player.py = map->y;
-				player++;
+				map->charracter++;
 			}
 			if (map->maps[map->y][map->x] == 'E')
 				map->exit++;
 		}
 	}
-	if (map->exit != 1 || player != 1 || map->collect <= 0)
-		ft_error("Error");
+	if (map->exit != 1 || map->charracter != 1 || map->collect <= 0)
+		ft_error("Error: invalid amount of characters found in map");
 }
 
 void	check_map(int fd, t_game *map)
 {
 	static char		*line;
 	char			*temp;
-	int				i;
 
-	i = 0;
 	while (1)
 	{
 		temp = get_next_line(fd);
 		if (temp == NULL)
-		{
-			if (line == NULL)
-				ft_error("Error: empty map");
 			break ;
-		}
 		if (!line)
 			line = ft_strdup(temp);
-		else
+		else if (line)
 			line = append_line(line, temp);
+		if (!line)
+			ft_error("Error: malloc failure in strdup or strjoin");
 		free(temp);
-		i++;
 	}
+	if (!extra_nl(line))
+		ft_error("Error: extra newlines");
 	map->maps = ft_split(line, '\n');
-	check_req(map, i);
+	if (!map->maps)
+		ft_error("Error: split malloc");
 	map->map_cpy = ft_split(line, '\n');
 }
 
@@ -126,6 +119,7 @@ void	ft_init_map(t_game *map, int ac, char *av)
 		check_map(fd, map);
 		close (fd);
 		validate(map);
+		check_req(map, map->y);
 		path_check(map);
 	}
 	else

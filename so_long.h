@@ -6,7 +6,7 @@
 /*   By: eagbomei <eagbomei@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 16:23:00 by eagbomei          #+#    #+#             */
-/*   Updated: 2024/02/19 16:34:51 by eagbomei         ###   ########.fr       */
+/*   Updated: 2024/02/22 11:35:03 by eagbomei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ typedef struct s_game
 	char			**map_cpy;
 	void			*mlx;
 	int				moves;
+	int				victory;
+	int				charracter;
 }	t_game;
 
 void	ft_error(char *msg);
@@ -71,5 +73,7 @@ void	move_right(t_game *game);
 void	move_left(t_game *game);
 void	remove_coin(t_game *game);
 void	ft_init_png(t_game *game);
+void	free_all(char **split);
+int		extra_nl(char *line);
 
 #endif

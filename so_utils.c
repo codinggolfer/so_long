@@ -6,7 +6,7 @@
 /*   By: eagbomei <eagbomei@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 15:28:44 by eagbomei          #+#    #+#             */
-/*   Updated: 2024/02/16 13:46:23 by eagbomei         ###   ########.fr       */
+/*   Updated: 2024/02/22 11:33:28 by eagbomei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,22 @@ void	path_check(t_game *map)
 	}
 	if (map->exit != 0 || map->temp_col != 0)
 		ft_error("Error: game cannot be finished");
+}
+
+int	extra_nl(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (line[0] == '\n')
+		return (0);
+	while (line[i])
+	{
+		if (line[i] == '\n' && line[i + 1] == '\n')
+			return (0);
+		i++;
+	}
+	if (line[ft_strlen(line) - 1] == '\n')
+		return (0);
+	return (1);
 }

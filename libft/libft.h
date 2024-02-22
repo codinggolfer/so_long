@@ -6,7 +6,7 @@
 /*   By: eagbomei <eagbomei@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 14:23:37 by eagbomei          #+#    #+#             */
-/*   Updated: 2024/02/08 13:45:17 by eagbomei         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:38:44 by eagbomei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,9 @@
 # include <stdlib.h>
 # include <stdarg.h>
 
-
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
 # endif
-
 
 void	*ft_calloc(size_t count, size_t size);
 int		ft_atoi(const char *str);
@@ -67,6 +65,5 @@ int		address_printer(uintptr_t i);
 int		hex_printer(const char format, unsigned int i);
 char	*get_next_line(int fd);
 char	*append_line(char *lines, char *ret);
-
 
 #endif

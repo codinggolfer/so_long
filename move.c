@@ -6,13 +6,13 @@
 /*   By: eagbomei <eagbomei@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 13:36:40 by eagbomei          #+#    #+#             */
-/*   Updated: 2024/02/19 16:41:56 by eagbomei         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:35:33 by eagbomei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	remove_coin(t_game *game)
+void	remove_coin(t_game *g)
 {
 	int	x;
 	int	y;
@@ -20,16 +20,18 @@ void	remove_coin(t_game *game)
 
 	i = -1;
 	y = 0;
-	while (game->maps[game->player.py][game->player.px] == 'C')
+	while (g->maps[g->player.py][g->player.px] == 'C')
 	{
 		x = 0;
-		while (game->maps[y][x] != '\0')
+		while (g->maps[y][x] != '\0')
 		{
-			if (game->maps[y][x] == 'C')
+			if (g->maps[y][x] == 'C')
 				i++;
-			if (x == game->player.px && y == game->player.py)
+			if (x == g->player.px && y == g->player.py)
 			{
-				game->img.c->instances[i].enabled = 0;
+				if (g->img.c->instances[i].enabled != 0)
+					g->collect--;
+				g->img.c->instances[i].enabled = 0;
 				return ;
 			}
 			x++;
@@ -38,59 +40,98 @@ void	remove_coin(t_game *game)
 	}
 }
 
-void	move_up(t_game *game)
+void	move_up(t_game *g)
 {
-	if (game->maps[game->player.py - 1][game->player.px] == '1')
+	if (g->maps[g->player.py - 1][g->player.px] == '1')
 		return ;
-	game->player.py--;
-	if (game->maps[game->player.py][game->player.px] == 'C')
+	g->player.py--;
+	if (g->maps[g->player.py][g->player.px] == 'C')
+		remove_coin(g);
+	if (g->collect == 0 && !g->victory)
 	{
-		remove_coin(game);
-		game->collect--;
+		g->victory = 1;
+		if (mlx_image_to_window(g->mlx, g->img.e,
+				g->x * WIDHT, g->y * HIGHT) == -1)
+			ft_error("Error: exit image");
 	}
-	game->img.p->instances->y -= WIDHT;
-	ft_printf("%d\n", game->moves++);
+	g->img.p->instances->y -= WIDHT;
+	ft_printf("Steps: %d\n", g->moves++);
+	if (g->collect == 0
+		&& g->maps[g->player.py][g->player.px] == 'E')
+	{
+		ft_printf("You got all the coupons and made it on time to the shop!\n");
+		mlx_close_window(g->mlx);
+	}
 }
 
-void	move_down(t_game *game)
+void	move_down(t_game *g)
 {
-	if (game->maps[game->player.py + 1][game->player.px] == '1')
+	if (g->maps[g->player.py + 1][g->player.px] == '1')
 		return ;
-	game->player.py++;
-	if (game->maps[game->player.py][game->player.px] == 'C')
+	g->player.py++;
+	if (g->maps[g->player.py][g->player.px] == 'C')
+		remove_coin(g);
+	if (g->collect == 0 && !g->victory)
 	{
-		remove_coin(game);
-		game->collect--;
+		g->victory = 1;
+		if (mlx_image_to_window(g->mlx, g->img.e,
+				g->x * WIDHT, g->y * HIGHT) == -1)
+			ft_error("Error: exit image");
 	}
-	game->img.p->instances->y += WIDHT;
-	ft_printf("%d\n", game->moves++);
+	g->img.p->instances->y += WIDHT;
+	ft_printf("Steps: %d\n", g->moves++);
+	if (g->collect == 0
+		&& g->maps[g->player.py][g->player.px] == 'E')
+	{
+		ft_printf("You got all the coupons and made it on time to the shop!\n");
+		mlx_close_window(g->mlx);
+	}
 }
 
-void	move_left(t_game *game)
+void	move_left(t_game *g)
 {
-	if (game->maps[game->player.py][game->player.px - 1] == '1')
+	if (g->maps[g->player.py][g->player.px - 1] == '1')
 		return ;
-	game->player.px--;
-	if (game->maps[game->player.py][game->player.px] == 'C')
+	g->player.px--;
+	if (g->maps[g->player.py][g->player.px] == 'C')
+		remove_coin(g);
+	if (g->collect == 0 && !g->victory)
 	{
-		remove_coin(game);
-		game->collect--;
+		g->victory = 1;
+		if (mlx_image_to_window(g->mlx, g->img.e,
+				g->x * WIDHT, g->y * HIGHT) == -1)
+			ft_error("Error: exit image");
 	}
-	game->img.p->instances->x -= HIGHT;
-	ft_printf("%d\n", game->moves++);
+	g->img.p->instances->x -= HIGHT;
+	ft_printf("Steps: %d\n", g->moves++);
+	if (g->collect == 0
+		&& g->maps[g->player.py][g->player.px] == 'E')
+	{
+		ft_printf("You got all the coupons and made it on time to the shop!\n");
+		mlx_close_window(g->mlx);
+	}
 }
 
-void	move_right(t_game *game)
+void	move_right(t_game *g)
 {
-	if (game->maps[game->player.py][game->player.px + 1] == '1')
+	if (g->maps[g->player.py][g->player.px + 1] == '1')
 		return ;
-	game->player.px++;
-	if (game->maps[game->player.py][game->player.px] == 'C')
+	g->player.px++;
+	if (g->maps[g->player.py][g->player.px] == 'C')
+		remove_coin(g);
+	if (g->collect == 0 && !g->victory)
 	{
-		remove_coin(game);
-		game->collect--;
+		g->victory = 1;
+		if (mlx_image_to_window(g->mlx, g->img.e,
+				g->x * WIDHT, g->y * HIGHT) == -1)
+			ft_error("Error: exit image");
 	}
-	game->img.p->instances->x += HIGHT;
-	ft_printf("%d\n", game->moves++);
-	
+	g->img.p->instances->x += HIGHT;
+	ft_printf("Steps: %d\n", g->moves++);
+	if (g->collect == 0
+		&& g->maps[g->player.py][g->player.px] == 'E')
+	{
+		ft_printf("You got all the coupons and made it on time to the shop!\n");
+		mlx_close_window(g->mlx);
+	}
 }

@@ -6,67 +6,81 @@
 /*   By: eagbomei <eagbomei@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:58:09 by eagbomei          #+#    #+#             */
-/*   Updated: 2024/02/19 16:14:15 by eagbomei         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:46:38 by eagbomei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	add_picture(t_game *game, int x, int y)
+void	add_picture(t_game *g, int x, int y)
 {
-	if (game->maps[y][x] == '1')
-		mlx_image_to_window(game->mlx, game->img.wall, x * WIDHT, y * HIGHT);
-	else if (game->maps[y][x] == 'C')
+	if (mlx_image_to_window(g->mlx, g->img.floor, x * WIDHT, y * HIGHT) == -1)
+		ft_error("Error: flooring images");
+	if (g->maps[y][x] == '1')
 	{
-		mlx_image_to_window(game->mlx, game->img.floor, x * WIDHT, y * HIGHT);
-		mlx_image_to_window(game->mlx, game->img.c,
-			x * WIDHT + 25, y * HIGHT + 25);
+		if (mlx_image_to_window(g->mlx, g->img.wall,
+				x * WIDHT, y * HIGHT) == -1)
+			ft_error("Error: wall pictures");
 	}
-	else if (game->maps[y][x] == '0' || game->maps[y][x] == 'P')
-		mlx_image_to_window(game->mlx, game->img.floor, x * WIDHT, y * HIGHT);
-	else if (game->maps[y][x] == 'E')
-		mlx_image_to_window(game->mlx, game->img.e, x * WIDHT, y * HIGHT);
+	else if (g->maps[y][x] == 'C')
+	{
+		if (mlx_image_to_window(g->mlx, g->img.c,
+				x * WIDHT + 25, y * HIGHT + 25) == -1)
+			ft_error("Error: collect image");
+	}
+	else if (g->maps[y][x] == 'E')
+	{
+		g->y = y;
+		g->x = x;
+	}
 }
 
-void	put_texture(t_game *game)
+void	put_texture(t_game *g)
 {
 	int	x;
 	int	y;
 
 	y = 0;
-	while (game->maps[y])
+	while (g->maps[y])
 	{
 		x = 0;
-		while (game->maps[y][x] != '\0')
+		while (g->maps[y][x] != '\0')
 		{
-			add_picture(game, x, y);
+			add_picture(g, x, y);
 			x++;
 		}
 		y++;
 	}
-	x = game->player.px;
-	y = game->player.py;
-	mlx_image_to_window(game->mlx, game->img.p, x * WIDHT * 1.25, y * HIGHT);
+	x = g->player.px;
+	y = g->player.py;
+	if (mlx_image_to_window(g->mlx, g->img.p, x * WIDHT * 1.25, y * HIGHT) < 0)
+		ft_error("Error: player image");
 }
 
-void	ft_init_png(t_game *game)
+void	ft_init_png(t_game *g)
 {
-	game->img.c = mlx_texture_to_image(game->mlx,
-			mlx_load_png("./../32x32 icons/taco.png"));
-	mlx_resize_image(game->img.c, WIDHT * 0.5, HIGHT * 0.5);
-	game->img.floor = mlx_texture_to_image(game->mlx,
-			mlx_load_png("./../Free_pack/grass_1.png"));
-	mlx_resize_image(game->img.floor, WIDHT, HIGHT);
-	game->img.p = mlx_texture_to_image(game->mlx,
-			mlx_load_png("./../manga_down.png"));
-	mlx_resize_image(game->img.p, 50, HIGHT);
-	game->img.e = mlx_texture_to_image(game->mlx,
-			mlx_load_png("./../Free_pack/cobblestone_3.png"));
-	mlx_resize_image(game->img.e, WIDHT, HIGHT);
-	game->img.wall = mlx_texture_to_image(game->mlx,
-			mlx_load_png("./../Free_pack/sand_1.png"));
-	mlx_resize_image(game->img.wall, WIDHT, HIGHT);
-	if (!game->img.p || !game->img.e || !game->img.c || !game->img.wall
-		|| !game->img.floor)
+	static mlx_texture_t	*temp;
+	static mlx_texture_t	*temp2;
+	static mlx_texture_t	*temp3;
+	static mlx_texture_t	*temp4;
+	static mlx_texture_t	*temp5;
+
+	temp = mlx_load_png("./textures/kuponki.png");
+	g->img.c = mlx_texture_to_image(g->mlx, temp);
+	mlx_resize_image(g->img.c, WIDHT * 0.5, HIGHT * 0.5);
+	temp2 = mlx_load_png("./textures/cobblestone_2.png");
+	g->img.floor = mlx_texture_to_image(g->mlx, temp2);
+	mlx_resize_image(g->img.floor, WIDHT, HIGHT);
+	temp3 = mlx_load_png("./textures/sensei.png");
+	g->img.p = mlx_texture_to_image(g->mlx, temp3);
+	mlx_resize_image(g->img.p, 50, HIGHT);
+	temp4 = mlx_load_png("./textures/shop.png");
+	g->img.e = mlx_texture_to_image(g->mlx, temp4);
+	mlx_resize_image(g->img.e, WIDHT, HIGHT);
+	temp5 = mlx_load_png("./textures/building2.png");
+	g->img.wall = mlx_texture_to_image(g->mlx, temp5);
+	mlx_resize_image(g->img.wall, WIDHT, HIGHT);
+	if (!g->img.p || !g->img.e || !g->img.c || !g->img.wall
+		|| !g->img.floor)
 		ft_error("Error: texture issue");
 }
