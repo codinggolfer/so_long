@@ -6,7 +6,7 @@
 /*   By: eagbomei <eagbomei@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 13:36:40 by eagbomei          #+#    #+#             */
-/*   Updated: 2024/02/22 14:35:33 by eagbomei         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:52:48 by eagbomei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	move_up(t_game *g)
 				g->x * WIDHT, g->y * HIGHT) == -1)
 			ft_error("Error: exit image");
 	}
-	g->img.p->instances->y -= WIDHT;
+	g->img.p->instances->y -= HIGHT;
 	ft_printf("Steps: %d\n", g->moves++);
 	if (g->collect == 0
 		&& g->maps[g->player.py][g->player.px] == 'E')
@@ -78,7 +78,7 @@ void	move_down(t_game *g)
 				g->x * WIDHT, g->y * HIGHT) == -1)
 			ft_error("Error: exit image");
 	}
-	g->img.p->instances->y += WIDHT;
+	g->img.p->instances->y += HIGHT;
 	ft_printf("Steps: %d\n", g->moves++);
 	if (g->collect == 0
 		&& g->maps[g->player.py][g->player.px] == 'E')
@@ -102,7 +102,7 @@ void	move_left(t_game *g)
 				g->x * WIDHT, g->y * HIGHT) == -1)
 			ft_error("Error: exit image");
 	}
-	g->img.p->instances->x -= HIGHT;
+	g->img.p->instances->x -= WIDHT;
 	ft_printf("Steps: %d\n", g->moves++);
 	if (g->collect == 0
 		&& g->maps[g->player.py][g->player.px] == 'E')
@@ -126,7 +126,7 @@ void	move_right(t_game *g)
 				g->x * WIDHT, g->y * HIGHT) == -1)
 			ft_error("Error: exit image");
 	}
-	g->img.p->instances->x += HIGHT;
+	g->img.p->instances->x += WIDHT;
 	ft_printf("Steps: %d\n", g->moves++);
 	if (g->collect == 0
 		&& g->maps[g->player.py][g->player.px] == 'E')

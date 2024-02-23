@@ -21,13 +21,13 @@ CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror -Ofast
 RM		=	rm -f
 
-all:	libmlx $(LIBFT) $(NAME)
+all:	$(LIBFT) libmlx $(NAME)
 
-$(NAME): $(FtoO)
+$(NAME): $(FtoO) so_long.h
 	$(CC) $(CFLAGS) $(FtoO) $(INCLUDES) $(HEADERS) $(LIBFT) $(LIBS) -o $(NAME)
 
 libmlx:
-	@if [ ! -d $(LIBMLX)/build ]; then cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4; fi
+	if [ ! -d $(LIBMLX)/build ]; then cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4; fi
 
 $(LIBFT):
 	@make -C ./libft
@@ -36,7 +36,7 @@ $(LIBFT):
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compiling: $(notdir $<)"
 
 clean:
-	@make clean -C libft
+	@make fclean -C libft
 	@rm -rf $(LIBMLX)/build
 	$(RM) $(FtoO)
 
