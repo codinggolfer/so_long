@@ -6,7 +6,7 @@
 /*   By: eagbomei <eagbomei@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 15:28:44 by eagbomei          #+#    #+#             */
-/*   Updated: 2024/02/22 11:33:28 by eagbomei         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:06:58 by eagbomei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	extra_nl(char *line)
 	int	i;
 
 	i = 0;
-	if (line[0] == '\n')
+	if (line[0] == '\n' || !line)
 		return (0);
 	while (line[i])
 	{

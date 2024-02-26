@@ -6,7 +6,7 @@
 /*   By: eagbomei <eagbomei@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:28:39 by eagbomei          #+#    #+#             */
-/*   Updated: 2024/02/22 15:31:53 by eagbomei         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:07:13 by eagbomei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void	validate(t_game *map)
 
 void	check_map(int fd, t_game *map)
 {
-	static char		*line;
+	static char		*line = NULL;
 	char			*temp;
 
 	while (1)
@@ -95,7 +95,7 @@ void	check_map(int fd, t_game *map)
 		free(temp);
 	}
 	if (!extra_nl(line))
-		ft_error("Error: extra newlines");
+		ft_error("Error: extra newlines or empty map");
 	map->maps = ft_split(line, '\n');
 	if (!map->maps)
 		ft_error("Error: split malloc");
@@ -112,10 +112,7 @@ void	ft_init_map(t_game *map, int ac, char *av)
 	{
 		fd = open(av, O_RDONLY);
 		if (fd == -1 || !ft_strnstr(av + len, ".ber", 4))
-		{
 			ft_error("Error: invalid map");
-			exit(1);
-		}
 		check_map(fd, map);
 		close (fd);
 		validate(map);
