@@ -6,7 +6,7 @@
 /*   By: eagbomei <eagbomei@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 14:58:09 by eagbomei          #+#    #+#             */
-/*   Updated: 2024/02/22 15:46:38 by eagbomei         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:29:34 by eagbomei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	put_texture(t_game *g)
 	}
 	x = g->player.px;
 	y = g->player.py;
-	if (mlx_image_to_window(g->mlx, g->img.p, x * WIDHT * 1.25, y * HIGHT) < 0)
+	if (mlx_image_to_window(g->mlx, g->img.p, x * WIDHT, y * HIGHT) < 0)
 		ft_error("Error: player image");
 }
 
